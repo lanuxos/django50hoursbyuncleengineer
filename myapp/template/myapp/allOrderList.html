@@ -1,0 +1,66 @@
+{% extends 'myapp/base.html' %} {% load humanize %} {% block content %}
+<h3>
+  All Order List Info
+  <a href="{% url 'checkOut' %}" class="btn btn-sm btn-success">Check out -></a>
+</h3>
+<table class="table table-bordered table-strip">
+  <thead>
+    <tr class="text-center">
+      <td>Time Stamp</td>
+      <td>Order ID</td>
+      <td>Total Price</td>
+      <td>Shipment</td>
+      <td>Net Price</td>
+      <td>Status</td>
+      <td>Paid</td>
+      <td>Tracking Number</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for od in allOrder %}
+    <tr>
+      <td>{{od.stamp}}</td>
+      <td>
+        <a href="{% url 'updateTracking' od.orderId %}"
+          >{{od.orderId }} ({{od.name}})</a
+        >
+      </td>
+      <td class="text-right">{{od.total|intcomma}}</td>
+      <td class="text-right">{{od.shipCost|intcomma}}</td>
+      <td class="text-right">{{od.total|add:od.shipCost|intcomma}}</td>
+      <td class="text-center">
+        {% if od.slip %} <a href="{{od.slip.url}}">Browse slip</a> {% else %}
+        <i class="fa fa-close" style="font-size: 15px; color: red"></i>
+        {% endif %}
+      </td>
+      <td class="text-center">
+        {% if od.paid %}
+        <a
+          href="{% url 'updateStatus' od.orderId 'cancel' %}"
+          class="btn btn-sm btn-light"
+          ><i
+            class="fa fa-check-square-o"
+            style="font-size: 25px; color: green"
+          ></i
+        ></a>
+        {% else %} {% if od.slip %}
+        <a
+          href="{% url 'updateStatus' od.orderId 'confirm' %}"
+          class="btn btn-sm btn-light"
+          ><i class="fa fa-close" style="font-size: 15px; color: red"
+            >CF Now</i
+          ></a
+        >
+        {% else %}
+        <i class="fa fa-close" style="font-size: 15px; color: orange"></i>
+        {% endif %} {% endif %}
+      </td>
+      <td>
+        {% if od.trackingNumber != None %} {{ od.trackingNumber }} {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

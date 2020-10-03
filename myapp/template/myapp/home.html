@@ -1,0 +1,102 @@
+{% extends 'myapp/base.html' %} {% block content %}
+<center>
+  <h3>Latest photos</h3>
+  <br />
+</center>
+
+<center>
+  <div class="row">
+    {% for pd in product %}
+    <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+      <div class="card" style="width: 100%; padding: 10">
+        {% if pd.image %}
+        <img
+          class="card-img-top"
+          src="{{ pd.image.url }}"
+          alt="Card image cap"
+          height="25%"
+          width="25%"
+        />
+        {% elif pd.imageUrl != None %}
+        <img
+          class="card-img-top"
+          src="{{ pd.imageUrl }}"
+          alt="Card image cap"
+          height="25%"
+          width="25%"
+        />
+        {% else %}
+        <img src="/media/download.png" alt="" />
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ pd.name }}</h5>
+          {% if pd.inStock == True %}
+          <a href="" class="btn btn-sm btn-success"
+            >BUY NOW | In Stock: {{ pd.quantity }}</a
+          >
+          {% else %}
+          <a href="" class="btn btn-sm btn-warning">Out Of Stock</a>
+          {% endif %}
+          <p class="card-text">
+            {{ pd.detail|linebreaks|truncatechars_html:50 }}
+          </p>
+          <a href="#" class="btn btn-info"
+            >Price: {{ pd.price }} / {{ pd.unit }}</a
+          >
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <hr />
+  <h3><a href="{% url 'allProduct' %}">Click here to see all photos</a></h3>
+  <hr />
+  <h3>Preorder Photos</h3>
+  <br />
+  <div class="container">
+    <div class="row">
+      {% for pd in preOrder %}
+      <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+        <div class="card" style="width: 100%; padding: 10">
+          {% if pd.image %}
+          <img
+            class="card-img-top"
+            src="{{ pd.image.url }}"
+            alt="Card image cap"
+            height="25%"
+            width="25%"
+          />
+          {% elif pd.imageUrl != None %}
+          <img
+            class="card-img-top"
+            src="{{ pd.imageUrl }}"
+            alt="Card image cap"
+            height="25%"
+            width="25%"
+          />
+          {% else %}
+          <img src="/media/download.png" alt="" />
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ pd.name }}</h5>
+            {% if pd.inStock == True %}
+            <a href="" class="btn btn-sm btn-success"
+              >BUY NOW | In Stock: {{ pd.quantity }}</a
+            >
+            {% else %}
+            <a href="" class="btn btn-sm btn-warning">Pre-order</a>
+            {% endif %}
+            <p class="card-text">
+              {{ pd.detail|linebreaks|truncatechars_html:50 }}
+            </p>
+            <a href="#" class="btn btn-info"
+              >Price: {{ pd.price }} / {{ pd.unit }}</a
+            >
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</center>
+{% endblock %}

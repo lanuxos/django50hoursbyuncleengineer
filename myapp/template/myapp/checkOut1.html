@@ -1,0 +1,83 @@
+{% extends 'myapp/base.html' %} {% block content %}
+
+<div class="container" style="margin: 10; padding: 10">
+  <h3>Please fill in the shipping info</h3>
+  <form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="name">Receiver's Name:</label>
+      <input type="text" class="form-control" id="name" name="name" />
+    </div>
+    <div class="form-group">
+      <label for="tel">Tel:</label>
+      <input type="text" class="form-control" id="tel" name="tel" />
+    </div>
+    <div class="form-group">
+      <label for="address">Address:</label>
+      <textarea
+        name="address"
+        id="address"
+        cols=""
+        rows="5"
+        class="form-control"
+      ></textarea>
+    </div>
+
+    <hr />
+    <div class="form-check">
+      <label for="ems" class="form-check-label"
+        ><input
+          type="radio"
+          name="shipping"
+          id="ems"
+          value="ems"
+        />&nbsp;EMS</label
+      >
+    </div>
+    <div class="form-check">
+      <label for="register" class="form-check-label"
+        ><input
+          type="radio"
+          name="shipping"
+          id="register"
+          value="register"
+        />&nbsp;Register</label
+      >
+    </div>
+    <hr />
+    <div class="form-check">
+      <label for="transfer" class="form-check-label"
+        ><input
+          type="radio"
+          name="payment"
+          id="transfer"
+          value="transfer"
+        />&nbsp;Transfer</label
+      >
+    </div>
+    <div class="form-check">
+      <label for="cod" class="form-check-label"
+        ><input
+          type="radio"
+          name="payment"
+          id="cod"
+          value="cod"
+        />&nbsp;COD</label
+      >
+    </div>
+    <hr />
+    <div class="form-group">
+      <label for="other">Notice:</label>
+      <textarea
+        name="other"
+        id="other"
+        cols=""
+        rows="5"
+        class="form-control"
+      ></textarea>
+    </div>
+    <input type="hidden" name="page" value="information" />
+    <div><button type="submit" class="btn btn-primary">Next</button><br /></div>
+  </form>
+</div>
+{% endblock %}

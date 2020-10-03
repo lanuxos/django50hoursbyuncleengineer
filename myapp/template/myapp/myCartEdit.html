@@ -1,0 +1,62 @@
+{% extends 'myapp/base.html' %} {% block content %} {% if status == 'delete' %}
+<div class="alert alert-danger">
+  Delete item(s) from Cart, add new if you want
+</div>
+{% endif %}
+<h3>Edit My Cart</h3>
+<form action="" method="POST" id="formSave">
+  {% csrf_token %}
+  <table class="table table-bordered table-strip">
+    <thead>
+      <tr>
+        <td>Product ID</td>
+        <td>Product Name</td>
+        <td>Product Price / Piece</td>
+        <td>Product Quantity</td>
+        <td>Delete</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for pd in myCart %}
+      <tr>
+        <td>{{pd.productId }}</td>
+        <td>{{ pd.productName }}</td>
+        <td>{{pd.price}}</td>
+        <td>
+          <input
+            type="text"
+            name="pd_{{pd.productId}}"
+            value="{{pd.quantity}}"
+          />
+        </td>
+        <td>-</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <input type="hidden" name="checkSave" value="checkSave" />
+  <input
+    type="submit"
+    form="formSave"
+    class="btn btn-sm btn-success form-control"
+    value="Save"
+  /><br />
+</form>
+<form
+  action=""
+  method="POST"
+  id="clear"
+  onsubmit="return confirm('Are you sure you want to clear all items from cart');"
+>
+  {% csrf_token %}
+  <br />
+  <input type="hidden" name="clear" value="clear" />
+  <input
+    type="submit"
+    form="clear"
+    class="btn btn-sm btn-danger form-control"
+    value="Clear all items in your cart"
+  />
+</form>
+
+{% endblock %}

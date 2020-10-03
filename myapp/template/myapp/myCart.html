@@ -1,0 +1,63 @@
+{% extends 'myapp/base.html' %} {% load humanize %} {% block content %}
+<h3>
+  My Cart
+  <a href="{% url 'myCartEdit'%}" class="btn btn-sm btn-info"
+    >Edit Your Items</a
+  >
+  <a href="{% url 'checkOut' %}" class="btn btn-sm btn-success">Check out -></a>
+</h3>
+{% if status == 'delete' %}
+<div class="alert alert-danger">
+  Delete item(s) from Cart, add new if you want
+</div>
+{% endif %}
+<table class="table table-bordered table-strip">
+  <thead>
+    <tr>
+      <td>Time Stamp</td>
+      <td>Product ID</td>
+      <td>Product Name</td>
+      <td>Product Price / Piece</td>
+      <td>Product Quantity</td>
+      <td>Total Price</td>
+      <td>Delete</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for pd in myCart %}
+    <tr>
+      <td>{{pd.stamp}}</td>
+      <td>{{pd.productId }}</td>
+      <td>{{ pd.productName }}</td>
+      <td class="text-right">{{pd.price|intcomma}}</td>
+      <td class="text-right">{{pd.quantity}}</td>
+      <td class="text-right">{{pd.total|intcomma}}</td>
+      <td>
+        <form
+          action=""
+          method="POST"
+          id="form{{pd.productID}}"
+          onsubmit="return confirm('Yes?');"
+        >
+          {% csrf_token %}
+          <input type="hidden" name="productId" value="{{pd.productId }}" />
+          <input
+            type="submit"
+            form="form{{pd.productID}}"
+            class="btn btn-sm btn-danger"
+            value="Delete"
+          />
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td colspan="4" class="text-center">Total:</td>
+      <td class="text-right">{{ count|intcomma }}</td>
+      <td class="text-right">{{ total|intcomma }}</td>
+      <td>KIP</td>
+    </tr>
+  </tbody>
+</table>
+
+{% endblock %}

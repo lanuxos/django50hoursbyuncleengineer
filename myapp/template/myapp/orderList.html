@@ -1,0 +1,43 @@
+{% extends 'myapp/base.html' %} {% load humanize %} {% block content %}
+<h3>
+  Order List Info
+  <a href="{% url 'checkOut' %}" class="btn btn-sm btn-success">Check out -></a>
+</h3>
+<table class="table table-bordered table-strip">
+  <thead>
+    <tr>
+      <td>Time Stamp</td>
+      <td>Order ID</td>
+      <td>Total Price</td>
+      <td>Shipment</td>
+      <td>Net Price</td>
+      <td>Status</td>
+      <td>Tracking Number</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for od in allOrder %}
+    <tr>
+      <td>{{od.stamp}}</td>
+      <td><a href="{% url 'myOrder' od.orderId %}">{{od.orderId }}</a></td>
+      <td class="text-right">{{od.total|intcomma}}</td>
+      <td class="text-right">{{od.shipCost|intcomma}}</td>
+      <td class="text-right">{{od.total|add:od.shipCost|intcomma}}</td>
+      <td class="text-center">
+        {% if od.paid %}
+        <i class="fa fa-money" style="font-size: 25px; color: green">PAID</i>
+        {% else %}
+        <a href="{% url 'uploadSlip' od.orderId %}" class="btn btn-sm btn-info"
+          >Upload Slip</a
+        >
+        {% endif %}
+      </td>
+      <td>
+        {% if od.trackingNumber != None %} {{ od.trackingNumber }} {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

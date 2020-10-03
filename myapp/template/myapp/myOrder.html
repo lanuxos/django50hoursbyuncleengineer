@@ -1,0 +1,76 @@
+{% extends 'myapp/base.html' %} {% load humanize %} {% block content %}
+<h3>Order Detail</h3>
+<table>
+  <tr>
+    <td>Order ID:</td>
+    <td>{{order.orderId}}</td>
+  </tr>
+  <tr>
+    <td class="">Receiver's name:</td>
+    <td>{{order.name}}</td>
+  </tr>
+  <tr>
+    <td class="">Tel:</td>
+    <td>{{order.tel}}</td>
+  </tr>
+  <tr>
+    <td class="">Address:</td>
+    <td>{{order.address}}</td>
+  </tr>
+  <tr>
+    <td class="">Shipping type:</td>
+    <td>
+      {% if order.shipping == 'ems' %} EMS {% else %} Register {% endif %}
+    </td>
+  </tr>
+  <tr>
+    <td class="">Payment method:</td>
+    <td>
+      {% if order.payment == 'transfer' %} Transfer {% else %} COD [Add 5,000
+      more] {% endif %}
+    </td>
+  </tr>
+  <tr>
+    <td class="">Leave message:</td>
+    <td>{{order.other}}</td>
+  </tr>
+</table>
+<hr />
+<h3>My Oder Detail</h3>
+<table class="table table-bordered table-strip">
+  <thead>
+    <tr>
+      <td>Product ID</td>
+      <td>Product Name</td>
+      <td>Product Price / Piece</td>
+      <td>Product Quantity</td>
+      <td>Total Price</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for pd in odList %}
+    <tr>
+      <td>{{pd.productId }}</td>
+      <td>{{ pd.productName }}</td>
+      <td class="text-right">{{pd.price|intcomma}}</td>
+      <td class="text-right">{{pd.quantity}}</td>
+      <td class="text-right">{{pd.total|intcomma}}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td colspan="3" class="text-center">Total:</td>
+      <td class="text-right">{{ count|intcomma }}</td>
+      <td class="text-right">{{ total|intcomma }}</td>
+    </tr>
+  </tbody>
+</table>
+<p>included shipment cost: {{order.shipCost|intcomma}}</p>
+<h3>Net Cost for Order: {{total|add:order.shipCost|intcomma}},</h3><hr>
+<p>
+    KBANK Account Number: xx-xxxx-xxxx<br>
+    KBANK Account Name: Mr. Smith<br>
+    <hr>
+    PromtPay Account Number: xx-xxxx-xxxx<br>
+    PromtPay Account Name: Mr. Smith<br>
+</p>
+{% endblock %}

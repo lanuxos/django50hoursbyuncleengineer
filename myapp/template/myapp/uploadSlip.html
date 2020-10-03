@@ -1,0 +1,40 @@
+{% extends 'myapp/base.html' %} {% load humanize %} {% block content %}
+
+<div class="container" style="margin: 10; padding: 10">
+  <h3>Upload slip here, your order ID is : <i>{{orderId}}</i></h3>
+  <p>Number of product: {{count}} piece(s)</p>
+  <p>Product's price: {{total|intcomma}}</p>
+  {% if odDetail.payment == 'cod'%}
+  <p>For COD payment, you need to add 5000 fee</p>
+  {% endif %}
+  <p>Shipping type: {{odDetail.shipping}}, cost: {{shipCost|intcomma}}</p>
+  <p>
+    Total money you need to transfer:
+    <strong>{{grandTotal|intcomma}}</strong>
+  </p>
+  {% if odDetail.slip %}
+  <img src="{{ odDetail.slip.url }}" alt="" />
+  {% else %}
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="slipTime">Slip Upload Date:</label>
+      <input
+        type="text"
+        name="slipTime"
+        placeholder="2020/01/31"
+        id="slipTime"
+        class="form-control"
+      />
+    </div>
+    <div class="form-group">
+      <label for="slip">Choose Slip:</label>
+      <input type="file" class="form-control" id="slip" name="slip" />
+    </div>
+    <div>
+      <button type="submit" class="btn btn-primary">UPLOAD</button><br />
+    </div>
+  </form>
+  {% endif %}
+</div>
+{% endblock %}

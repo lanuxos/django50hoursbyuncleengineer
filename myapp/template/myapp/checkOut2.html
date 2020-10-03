@@ -1,0 +1,69 @@
+{% extends 'myapp/base.html' %} {% load humanize %} {% block content %}
+<h3>Order information</h3>
+<table>
+  <tr>
+    <td class="">Receiver's name:</td>
+    <td>{{name}}</td>
+  </tr>
+  <tr>
+    <td class="">Tel:</td>
+    <td>{{tel}}</td>
+  </tr>
+  <tr>
+    <td class="">Address:</td>
+    <td>{{address}}</td>
+  </tr>
+  <tr>
+    <td class="">Shipping type:</td>
+    <td>{% if shipping == 'ems' %} EMS {% else %} Register {% endif %}</td>
+  </tr>
+  <tr>
+    <td class="">Payment method:</td>
+    <td>{% if payment == 'transfer' %} Transfer {% else %} COD {% endif %}</td>
+  </tr>
+  <tr>
+    <td class="">Leave message:</td>
+    <td>{{other}}</td>
+  </tr>
+</table>
+<hr />
+<h3>Product List</h3>
+<table class="table table-bordered table-strip">
+  <thead>
+    <tr>
+      <td>Product ID</td>
+      <td>Product Name</td>
+      <td>Product Price / Piece</td>
+      <td>Product Quantity</td>
+      <td>Total Price</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for pd in myCart %}
+    <tr>
+      <td>{{pd.productId }}</td>
+      <td>{{ pd.productName }}</td>
+      <td class="text-right">{{pd.price|intcomma}}</td>
+      <td class="text-right">{{pd.quantity}}</td>
+      <td class="text-right">{{pd.total|intcomma}}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td colspan="3" class="text-center">Total:</td>
+      <td class="text-right">{{ count|intcomma }}</td>
+      <td class="text-right">{{ total|intcomma }}</td>
+    </tr>
+  </tbody>
+</table>
+<form action="" method="post">
+  {% csrf_token %}
+  <input type="hidden" name="name" value="{{name}}" id="name" />
+  <input type="hidden" name="tel" value="{{tel}}" id="tel" />
+  <input type="hidden" name="address" value="{{address}}" id="address" />
+  <input type="hidden" name="shipping" value="{{shipping}}" id="shipping" />
+  <input type="hidden" name="payment" value="{{payment}}" id="payment" />
+  <input type="hidden" name="other" value="{{other}}" id="other" />
+  <input type="hidden" name="page" value="confirm" id="page" />
+  <button type="submit" class="btn btn-sm btn-success">Confirm</button>
+</form>
+{% endblock %}
