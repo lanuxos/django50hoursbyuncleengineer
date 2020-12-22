@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,6 +33,8 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'myapp',
+    'mathfilters',
+    'logistic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -56,7 +59,8 @@ ROOT_URLCONF = 'djangoWeb.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'myapp/template')],
+        # 'DIRS': [os.path.join(BASE_DIR, 'myapp/template')],
+        'DIRS': [os.path.join(BASE_DIR, './template')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -107,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'ASIA/VIENTIANE'
+TIME_ZONE = 'Asia/Singapore'
 
 USE_I18N = True
 
@@ -119,7 +123,17 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+# STATIC_ROOT = os.path.join(BASE_DIR, './static')
+# STATIC_URL = '/static/'
+
 STATIC_URL = '/static/'
+
+# Add these new lines
+#STATICFILES_DIRS = (
+#    os.path.join(BASE_DIR, ''),
+#)
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -127,3 +141,5 @@ MEDIA_URL = '/media/'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home-page'
 LOGOUT_REDIRECT_URL = 'login'
+
+django_heroku.settings(locals())
