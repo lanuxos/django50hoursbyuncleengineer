@@ -30,13 +30,7 @@
         {% endif %}
         <div class="card-body">
           <h5 class="card-title">{{ pd.name }}</h5>
-          {% if pd.inStock == True %}
-          <a href="" class="btn btn-sm btn-success"
-            >BUY NOW | In Stock: {{ pd.quantity }}</a
-          >
-          {% else %}
-          <a href="" class="btn btn-sm btn-warning">Out Of Stock</a>
-          {% endif %}
+
           <p class="card-text">
             {{ pd.detail|linebreaks|truncatechars_html:50 }}
           </p>
@@ -79,13 +73,7 @@
           {% endif %}
           <div class="card-body">
             <h5 class="card-title">{{ pd.name }}</h5>
-            {% if pd.inStock == True %}
-            <a href="" class="btn btn-sm btn-success"
-              >BUY NOW | In Stock: {{ pd.quantity }}</a
-            >
-            {% else %}
-            <a href="" class="btn btn-sm btn-warning">Pre-order</a>
-            {% endif %}
+
             <p class="card-text">
               {{ pd.detail|linebreaks|truncatechars_html:50 }}
             </p>

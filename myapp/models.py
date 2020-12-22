@@ -13,7 +13,17 @@ class Profile(models.Model):
         return self.user.first_name + ' ' + self.user.last_name
 
 
+class Category(models.Model):
+    catName = models.CharField(max_length=100, default='General')
+    detail = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.catName
+
+
 class AllProduct(models.Model):
+    catName = models.ForeignKey(
+        Category, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=100)
     price = models.CharField(max_length=100)
     detail = models.TextField(null=True, blank=True)
@@ -67,3 +77,35 @@ class OrderPending(models.Model):
 
     def __str__(self):
         return self.orderId
+
+
+class VerifyEmail(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    token = models.CharField(max_length=100)
+    approved = models.BooleanField(default=False)
+
+
+class Materials(models.Model):
+    name = models.CharField(max_length=100)
+    m1 = models.FloatField(null=True, blank=True)
+    m2 = models.FloatField(null=True, blank=True)
+    m3 = models.FloatField(null=True, blank=True)
+    m4 = models.FloatField(null=True, blank=True)
+    m5 = models.FloatField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Products(models.Model):
+    name = models.CharField(max_length=100, null=True, blank=True)
+    pid = models.CharField(max_length=100, null=True, blank=True)
+    price = models.FloatField(null=True, blank=True)
+    pType = models.CharField(max_length=100, null=True, blank=True)
+    amount = models.IntegerField(null=True, blank=True)
+    cycle = models.IntegerField(null=True, blank=True)
+    sex = models.CharField(max_length=100, null=True, blank=True)
+    notice = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return self.name

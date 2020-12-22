@@ -1,3 +1,5 @@
+174.138.31.75
+ssh-keygen -t rsa
 # django note
 set up mac for django development environment --
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
@@ -8,9 +10,9 @@ now mkdir the project directory
     virtualenv ve                           //ve is the virtual environment we just created to further install django
     source ve/bin/activate                  // to activate virtualenv we just created
     pip3 install django                     // install django
-    sudo ufw allow 8000                     // to allow port 8000 on 
+    sudo ufw allow 8000                     // to allow port 8000 on
     django-admin startproject PROJECT_NAME  // create initial django project
-    cd PROJECT_NAME             
+    cd PROJECT_NAME
     python3 manage.py runserver             // to run localhost:8000 server
     python3 manage.py migrate               // to migrate the database system to django
     python3 manage.py createsuperuser       // to create to admin account for localhost:8000/admin
@@ -129,7 +131,7 @@ sudo systemctl enable gunicorn.socket
 sudo systemctl status gunicorn.socket
 
 file /run/gunicorn.sock
-# Out put as: 
+# Out put as:
     /run/gunicorn.sock: socket
 
 sudo systemctl status gunicorn
@@ -181,8 +183,8 @@ MEDIA_URL = '/media/'
 from django.conf import settings
 
 if settings.DEBUG:
-    urlpatterns += patterns('', 
-    	url(r'\^media/(?P<path>.\*)\$', 'django.views.static.serve', 
+    urlpatterns += patterns('',
+    	url(r'\^media/(?P<path>.\*)\$', 'django.views.static.serve',
     		{'document_root': settings.MEDIA_ROOT, }),
 )
 
@@ -226,7 +228,7 @@ and below is how to fetch image from db as:
   <p><img src="{{ dish.image.url }}"/></p>
 {% endif %}
 
-<p>Served by 
+<p>Served by
   <a href="{% url 'myrestaurants:restaurant_detail' dish.restaurant.id %}">
     {{ dish.restaurant.name}}
   </a>
@@ -298,4 +300,96 @@ admin = User.objects.get(username='admin')      # .get use with unique value onl
 admin.set_password('xxxx')                      # xxxx is new password
 admin.save()
 quit()
+
+# deploying to server
+create digital ocean account
+create droplet
+create ssh key
+    ssh-keygen -t rsa
+ssh root@ip # ip from droplet creating on digital ocean
+apt-get update && apt-get upgrade
+hostnamectl set-hostname django-server
+nano /etc/hosts
+    add ip and hostname from above
+sudo adduser picturaAdmin
+sudo adduser picturaAdmin sudo
+login
+sudo apt-get install ufw
+sudo ufw default allow outgoing
+sudo ufw default deny incoming
+sudo ufw allow 8000
+sudo ufw allow 22
+sudo ufw enable
+sudo ufw status
+sudo apt-get install python3-pip
+sudo apt-get install python3-venv
+sudo python3 -m venv venv
+sudo chown -R 777 'venv'
+sudo chmod -R 777 'venv'
+source ./venv/bin/activate
+pip -V
+pip install --upgrade pip
+pip install django==3.1.1
+pip install pillow
+check settings.py
+  @ ALLOWED_HOSTS=[*]
+  @ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+sudo chown -R 777 'djangoWeb'
+sudo chmod -R 777 'djangoWeb'
+source ./venv/bin/activate
+cd djangoWeb
+python manage.py runserver 0.0.0.0:8000
+python manage.py collectstatic
+sudo apt-get install apache2
+sudo apt-get install libapache2-mod-wsgi-py3
+cd /etc/apache2/sites-available/
+sudo cp 000.default.conf django_project.conf
+sudo nano django_project.conf
+
+Alias /static /home/picturaadmin/djangoWeb/static
+
+<Directory /home/picturaadmin/djangoWeb/static>
+
+    Require all granted
+
+</Directory>
+
+
+Alias /media /home/picturaadmin/djangoWeb/media
+
+<Directory /home/picturaadmin/djangoWeb/media>
+
+    Require all granted
+
+</Directory>
+
+
+<Directory /home/picturaadmin/djangoWeb/djangoWeb>
+
+    <Files wsgi.py>
+
+        Require all granted
+
+    </Files>
+
+</Directory>
+
+
+WSGIScriptAlias / /home/picturaadmin/djangoWeb/djangoWeb/wsgi.py
+
+WSGIDaemonProcess django_app python-path=/home/picturaadmin/djangoWeb python-home=/home/picturaadmin/venv
+
+WSGIProcessGroup django_app
+
+sudo a2ensite django_project.conf
+sudo a2dissite 000-default.conf
+cd /home/picturaadmin
+sudo chown :www-data djangoWeb/db.sqlite3
+sudo chmod 664 djangoWeb/db.sqlite3
+sudo chown :www-data djangoWeb/
+sudo chown -R :www-data djangoWeb/media
+sudo chown -R 775 djangoWeb/media
+sudo ufw delete allow 8000
+sudo ufw allow http/tcp
+sudo service apache2 restart
 

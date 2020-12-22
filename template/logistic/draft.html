@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Logistic Management System</title>
+    <link
+      rel="stylesheet"
+      href="{% static 'bootstrap/css/bootstrap.min.css' %}"
+    />
+  </head>
+  <body>
+    <h1>Welcome to Logistic Management System</h1>
+    <img
+      src="{% static 'images/armyEmblem.png'%}"
+      alt=""
+      height="200"
+      width="200"
+    />
+    <button class="btn btn-primary">Test</button>
+    {% block content %} {% endblock %}
+    <script src="{% static '' %}"></script>
+  </body>
+</html>

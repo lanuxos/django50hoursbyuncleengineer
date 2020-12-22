@@ -1,0 +1,20 @@
+{% extends 'myapp/base.html' %} {% block content %}
+      <h3>
+        Register Confirmation
+      </h3>
+      <hr>
+      {% if status == 'found' %}
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Success!</strong> Congratulations! Your account has been verified
+        </div>
+      {% else %}
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Cannot verified your account!</strong> Sorry! please check your email
+        </div>
+      {% endif %}
+      
+    </div>
+
+{% endblock %}

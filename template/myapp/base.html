@@ -1,3 +1,4 @@
+{% load custom_tags %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -51,7 +52,25 @@
           </li>
           {% endif %}
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'allProduct'%}">ALL PRODUCT</a>
+            <a class="nav-link" href="{% url 'allProduct'%}"
+              >ALL PRODUCT [{% show_allproduct %}]</a
+            >
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Category
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              {% all_category %}
+            </div>
           </li>
           {% if user.is_authenticated and user.profile.userType == 'admin'%}
           <li class="nav-item">
@@ -95,7 +114,16 @@
         <h5 class="display-4">the best photo gallery website --</h5>
       </div>
     </center>
-
+    <div class="container">
+      {% if user.is_authenticated and user.verifyemail.approved == False %}
+      <div class="alert alert-warning alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">
+          &times;
+        </button>
+        <strong>Please register or verify an account!</strong>
+      </div>
+      {% endif %}
+    </div>
     <div class="container-fluid">
       {% block content %} {% endblock content %}
     </div>

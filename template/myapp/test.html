@@ -1,0 +1,55 @@
+{% extends 'myapp/base.html' %} {% load mathfilters %} {% block content %}
+<div class="row">
+  <div class="col">
+    <div class="container">
+      <form action="" method="POST" class="form-group">
+        {% csrf_token %}
+        <label for="rate" class="form-group inline form-control"
+          >Exchange Rate</label
+        >
+        <input
+          type="number"
+          name="rate"
+          id="rate"
+          class="form-group inline form-control"
+        />
+        <input
+          type="submit"
+          name="button"
+          id="button"
+          class="btn btn-dark form-group form-control"
+        />
+      </form>
+    </div>
+    <div class="container">
+      <p>Price of cloth:{{ cloth }}</p>
+      <p>Price of uniform:{{ uniform }}</p>
+      <p>Price of hat:{{ hat }}</p>
+    </div>
+    <hr />
+    <div class="contain">
+      <div class="row">
+        <div class="col">
+          <form
+            action=""
+            method="post"
+            enctype="multipart/form-data"
+            class="form-group"
+          >
+            {% csrf_token %}
+            <input
+              type="file"
+              name="materialsFile"
+              id="materialsFile"
+              class="form-group"
+            />
+            <button type="submit" class="form-group" name="upload">
+              Upload
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
