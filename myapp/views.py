@@ -248,6 +248,17 @@ def Register(request):
     return render(request, 'myapp/register.html')
 
 
+def Graph(request):
+    product = AllProduct.objects.all()
+    pdName = []
+    pdQuan = []
+    for pd in product:
+        pdName.append(pd.name)
+        pdQuan.append(pd.quantity)
+    context = {'pdName': str(pdName), 'pdQuan': pdQuan}
+    return render(request, 'myapp/graph.html', context)
+
+
 def Product(request):
 
     product = AllProduct.objects.all().order_by('name')

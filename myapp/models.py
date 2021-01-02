@@ -109,3 +109,11 @@ class Products(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class TestModel(models.Model):
+    tid = models.CharField(max_length=10, null=True, blank=True)
+    name = models.CharField(max_length=10, null=True, blank=True)
+    m1 = models.FloatField(null=True, blank=True)
+    m2 = models.FloatField(null=True, blank=True)
+    m3 = models.FloatField(null=True, blank=True)

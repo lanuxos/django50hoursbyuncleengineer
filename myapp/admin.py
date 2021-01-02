@@ -27,3 +27,4 @@ admin.site.register(OrderPending)
 
 admin.site.register(Materials)
 admin.site.register(Products)
+admin.site.register(TestModel)

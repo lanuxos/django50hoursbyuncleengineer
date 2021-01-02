@@ -24,4 +24,5 @@ urlpatterns = [
     path('testFunction/', TestFunction, name='testFunction'),
     path('confirm/<str:token>/', Confirm, name='confirmEmail'),
     path('category/<int:code>', ProductCategory, name='categoryPage'),
+    path('graph/', Graph, name='graphPage'),
 ]
