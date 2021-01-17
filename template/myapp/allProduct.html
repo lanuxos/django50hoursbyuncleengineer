@@ -42,8 +42,9 @@
           <a href="" class="btn btn-sm btn-warning">Out Of Stock</a>
           {% endif %}
           <p class="card-text">
-            {{ pd.detail|linebreaks|truncatewords_html:10 }}
+            {{ pd.detail | linebreaks | truncatewords_html:10 }}
           </p>
+          <a href="{% url 'productDetail' pd.id %}">Detail...</a><br />
           <a href="#" class="btn btn-info"
             >Price: {{ pd.price }} / {{ pd.unit }}</a
           >

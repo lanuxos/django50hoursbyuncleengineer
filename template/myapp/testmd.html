@@ -1,0 +1,13 @@
+{% load markdown_extra %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test MD</title>
+  </head>
+  <body>
+    <h1>Test Md H1 Tag</h1>
+    {{ text | markdown | safe }} {{ number | markdown | safe }} {{ number }}
+  </body>
+</html>

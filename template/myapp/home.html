@@ -34,6 +34,7 @@
           <p class="card-text">
             {{ pd.detail|linebreaks|truncatechars_html:50 }}
           </p>
+          <a href="{% url 'productDetail' pd.id %}">Detail...</a><br />
           <a href="#" class="btn btn-info"
             >Price: {{ pd.price }} / {{ pd.unit }}</a
           >

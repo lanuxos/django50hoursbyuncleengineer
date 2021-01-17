@@ -1,0 +1,6 @@
+{% extends 'myapp/base.html' %} {% load markdown_extra %} {% block content %}
+<h3>Product Detail: {{ product.name }}</h3>
+<img src="{{ product.image.url }}" alt="" width="400" height="300" /><br />
+{{ product.detail | markdown | safe }}
+<h4>Price: {{ product.price }}</h4>
+{% endblock %}

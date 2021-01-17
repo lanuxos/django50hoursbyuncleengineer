@@ -648,6 +648,19 @@ def MyOrder(request, orderId):
     return render(request, 'myapp/myOrder.html', context)
 
 
+def ProductDetail(request, productId):
+    product = AllProduct.objects.get(id=productId)
+    context = {'product': product}
+    return render(request, 'myapp/productDetail.html', context)
+
+
+def TestMd(request):
+    text = "# Test"
+    number = '** 123 **'
+    context = {'text': text, 'number': number}
+    return render(request, 'myapp/testmd.html', context)
+
+
 def matPrice(m):
     mp = Materials.objects.filter(name='price')
     m1 = Materials.objects.filter(name=m)
