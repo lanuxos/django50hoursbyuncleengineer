@@ -27,5 +27,4 @@ urlpatterns = [
     path('graph/', Graph, name='graphPage'),
     path('testmd/', TestMd, name='testMd'),
     path('productDetail/<int:productId>/', ProductDetail, name='productDetail'),
-    path('editProduct/<int:productId>/', EditProduct, name='editProduct'),
 ]

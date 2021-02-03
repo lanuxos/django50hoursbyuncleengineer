@@ -575,15 +575,8 @@ def UpdatePaid(request, orderId, status):
     order = OrderPending.objects.get(orderId=orderId)
     if status == 'confirm':
         order.paid = True
-        order.confirmed = True
-        odList = OrderList.objects.filter(orderId=orderId)
-        for od in odList:
-            product = AllProduct.objects.get(id=od.productId)
-            product.quantity = product.quantity - od.quantity
-            product.save()
     elif status == 'cancel':
         order.paid = False
-        order.confirmed = False
     order.save()
 
     return redirect('allOrderList')
@@ -659,12 +652,6 @@ def ProductDetail(request, productId):
     product = AllProduct.objects.get(id=productId)
     context = {'product': product}
     return render(request, 'myapp/productDetail.html', context)
-
-
-def EditProduct(request, productId):
-    product = AllProduct.objects.get(id=productId)
-    context = {'product': product}
-    return render(request, 'myapp/editProduct.html', context)
 
 
 def TestMd(request):

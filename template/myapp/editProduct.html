@@ -1,0 +1,57 @@
+{% extends 'myapp/base.html' %} {% block content %}
+
+<div class="container" style="margin: 10; padding: 10">
+    <h3>Edit {{ product.name }}'s Detail</h3>
+
+    <img src="{{ product.image.url }}" alt="" width="400" height="300" /><br />
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name" value={{ product.name }} />
+        </div>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="text" class="form-control" id="price" name="price" value={{ product.price }} />
+        </div>
+        <div class="form-group">
+            <label for="quantity">Quantity:</label>
+            <input type="text" class="form-control" id="quantity" name="quantity" value={{ product.quantity }} />
+        </div>
+        <div class="form-group">
+            <label for="unit">Unit:</label>
+            <input type="text" class="form-control" id="unit" name="unit" value={{ product.unit }} />
+        </div>
+        <div class="form-group">
+            <label for="detail">Detail:</label>
+            <textarea class="form-control" rows="5" id="detail" name="detail">
+{{ product.detail }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="imageUrl">Image URL:</label>
+            <input type="text" class="form-control" id="imageUrl" name="imageUrl" />
+        </div>
+        <div class="form-group">
+        	{% if product.inStock %}
+        		<input type="radio" name="inStock" value="inStock" id="inStock" checked>
+        		<label for="inStock">In stock</label>
+	        	<input type="radio" name="inStock" value="outStock" id="outStock">
+	        	<label for="outStock">Out of stock</label>
+        	{% else %}
+        		<input type="radio" name="inStock" value="inStock" id="inStock">
+	        	<label for="inStock">In stock</label>
+	        	<input type="radio" name="inStock" value="outStock" id="outStock" checked>
+	        	<label for="outStock">Out of stock</label>
+        	{% endif %}
+        </div>
+        <div class="form-group">
+            <label for="imageUpload">ImageUpload:</label>
+            <input type="file" class="form-control" id="imageUpload" name="imageUpload" />
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Add Product</button><br />
+        </div>
+    </form>
+</div>
+{% endblock %}

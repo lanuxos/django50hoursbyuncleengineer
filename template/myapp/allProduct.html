@@ -30,16 +30,21 @@
         {% endif %}
         <div class="card-body">
           <h5 class="card-title">{{ pd.name }}</h5>
-          {% if pd.inStock == True %} {%if user.is_authenticated %}
+          {% if user.is_authenticated and user.profile.userType == 'admin'%}
+          <a href="{% url 'editProduct' pd.id %}" class="btn btn-sm btn-success"
+            >Edit Product Detail</a
+          >
+          {% elif user.is_authenticated and user.profile.userType != 'admin'%}
+          {% if pd.inStock == True %}
           <a href="{% url 'addToCart' pd.id %}" class="btn btn-sm btn-success"
             >BUY NOW | In Stock: {{ pd.quantity }}</a
           >
           {% else %}
+          <a href="" class="btn btn-sm btn-warning">Out Of Stock</a>
+          {% endif %} {% else %}
           <a href="{% url 'login' %}" class="btn btn-sm btn-success"
             >BUY NOW | In Stock: {{ pd.quantity }}</a
           >
-          {% endif %} {% else %}
-          <a href="" class="btn btn-sm btn-warning">Out Of Stock</a>
           {% endif %}
           <p class="card-text">
             {{ pd.detail | linebreaks | truncatewords_html:10 }}
